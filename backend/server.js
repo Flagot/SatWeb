@@ -1,6 +1,6 @@
 require("dotenv").config();
 const express = require("express");
-const waiterRoute = require("./routes/waiter.route");
+const waiterRoute = require("./routes/examRoute");
 const mongoose = require("mongoose");
 
 const app = express();
