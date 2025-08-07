@@ -58,6 +58,13 @@ body {
 
 .section {
   margin-top: 40px;
+  flex: 0 0 calc(33.333% - 20px); /* 3 per row with gap */
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  text-align: center;
 }
 
 .footer {
@@ -65,4 +72,11 @@ body {
   margin-top: 60px;
   padding: 20px;
   background: #f1f1f1;
+}
+#prep {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
 }

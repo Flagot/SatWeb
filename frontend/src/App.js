@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Results from "./pages/results";
 import Tips from "./pages/tips";
 import Preps from "./pages/Preps";
+import Exam from "./pages/exam";
 
 function App() {
   return (
@@ -14,15 +15,10 @@ function App() {
           <main className="main-content">
             <Routes>
               <Route path="/" element={<Home />} />
-            </Routes>
-            <Routes>
               <Route path="/result" element={<Results />} />
-            </Routes>
-            <Routes>
               <Route path="/preps" element={<Preps />} />
-            </Routes>
-            <Routes>
               <Route path="/tips" element={<Tips />} />
+              <Route path="/exam/:examId" element={<Exam />} />
             </Routes>
           </main>
         </BrowserRouter>
