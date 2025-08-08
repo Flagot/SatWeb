@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 // get all workouts
 const getexams = async (req, res) => {
-  const exams = await exam.find({}).sort({ createdAt: -1 });
+  const exams = await Exam.find({}).sort({ createdAt: -1 });
 
   res.status(200).json(exams);
 };
@@ -48,7 +48,7 @@ const createexam = async (req, res) => {
 const deleteexam = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedExam = await exam.findByIdAndDelete(id);
+    const deletedExam = await Exam.findByIdAndDelete(id);
 
     if (!deletedExam) {
       return res.status(404).json({ message: "Exam not found." });

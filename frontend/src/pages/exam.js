@@ -1,38 +1,69 @@
-import { useParams } from "react-router-dom";
-import { useState } from "react";
+// import { useEffect, useState } from "react";
+// import "./ExamPage.css";
+
+// const Home = () => {
+//   const [exams, setExams] = useState(null);
+//   const [currentIndex, setCurrentIndex] = useState(0);
+
+//   useEffect(() => {
+//     const fetchExams = async () => {
+//       const response = await fetch("http://localhost:4000/api/sat");
+//       const json = await response.json();
+
+//       if (response.ok) {
+//         setExams(json);
+//       }
+//     };
+
+//     fetchExams();
+//   }, []);
+
+//   return (
+//     <div className="exam-container">
+//       <div className="progress">
+//         Question {currentIndex + 1} / {exams && exams[0].questions.length}
+//       </div>
+//       <div className="question-column">
+//         {exams &&
+//           exams.map((exam) => (
+//             <p className="question-text">{exam.questions.map((q) => q.text)}</p>
+//           ))}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Home;
+import React, { useState, useEffect } from "react";
 import "./ExamPage.css";
-const examContent = {
-  sat: {
-    title: "SAT Exam",
-    questions: [
-      {
-        text: "What is the capital of France?",
-        choices: ["Paris", "Berlin", "Madrid", "Rome"],
-      },
-      {
-        text: "Solve: 2x + 5 = 15",
-        choices: ["x = 5", "x = 10", "x = 3", "x = 2"],
-      },
-      {
-        text: "What is the synonym of 'Rapid'?",
-        choices: ["Slow", "Fast", "Heavy", "Bright"],
-      },
-    ],
-  },
-  // Add more exams as needed
-};
 
-function ExamPage() {
-  const { examId } = useParams();
-  const exam = examContent[examId];
-
+const ExamPage = () => {
+  const [exams, setExams] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [markedQuestions, setMarkedQuestions] = useState([]);
   const [selectedChoices, setSelectedChoices] = useState({});
 
-  if (!exam) return <h2>Exam not found</h2>;
+  useEffect(() => {
+    const fetchexam = async () => {
+      const response = await fetch(`http://localhost:4000/api/sat`);
+      const data = await response.json();
+      if (!response.ok) {
+        // handle error, maybe throw or set error state
+        console.error("Fetch failed:", data);
+      } else {
+        setExams(data);
+      }
+    };
+    fetchexam();
+  }, []);
 
-  const currentQuestion = exam.questions[currentIndex];
+  // if (loading) return <h2>Loading exam...</h2>;
+  // if (error) return <h2>{error}</h2>;
+  // if (!exam) return <h2>Exam not found</h2>;
+  if (!exams || !exams[0].questions || exams[0].questions.length === 0)
+    return <p>No exam data found</p>;
+
+  const currentQuestion = exams[0]?.questions?.[currentIndex];
 
   const handleChoiceSelect = (choice) => {
     setSelectedChoices({
@@ -54,16 +85,16 @@ function ExamPage() {
   };
 
   const handleNext = () => {
-    if (currentIndex < exam.questions.length - 1)
+    if (currentIndex < exams[0].questions.length - 1)
       setCurrentIndex(currentIndex + 1);
   };
 
   return (
     <div className="exam-container">
       <div className="question-column">
-        <h2>{exam.title}</h2>
+        {/* <h2>{exam.title}</h2> */}
         <div className="progress">
-          Question {currentIndex + 1} / {exam.questions.length}
+          Question {currentIndex + 1} / {exams && exams[0].questions.length}
         </div>
         <p className="question-text">{currentQuestion.text}</p>
         <button onClick={handleMark} className="mark-btn">
@@ -74,7 +105,7 @@ function ExamPage() {
       </div>
 
       <div className="choices-column">
-        {currentQuestion.choices.map((choice, i) => (
+        {currentQuestion?.choices?.map((choice, i) => (
           <div
             key={i}
             className={`choice ${
@@ -82,7 +113,7 @@ function ExamPage() {
             }`}
             onClick={() => handleChoiceSelect(choice)}
           >
-            {choice}
+            {choice.text}
           </div>
         ))}
 
@@ -91,7 +122,7 @@ function ExamPage() {
             Prev
           </button>
 
-          {currentIndex === exam.questions.length - 1 ? (
+          {currentIndex === exams && exams.questions.length - 1 ? (
             <button onClick={() => alert("Exam Finished!")}>Finish</button>
           ) : (
             <button onClick={handleNext}>Next</button>
@@ -99,70 +130,11 @@ function ExamPage() {
         </div>
       </div>
     </div>
+    // <div>
+    //   <h1>All Exams Data</h1>
+    //   <pre>{JSON.stringify(exam, null, 2)}</pre>
+    // </div>
   );
-}
+};
 
 export default ExamPage;
-// const examContent = {
-//   sat: {
-//     title: "SAT Exam",
-//     questions: [
-//       "What is the capital of France?",
-//       "Solve: 2x + 5 = 15",
-//       "What is the synonym of 'Rapid'?",
-//     ],
-//   },
-//   ielts: {
-//     title: "IELTS Exam",
-//     questions: [
-//       "Describe your favorite season.",
-//       "What are the benefits of reading?",
-//       "Write about a memorable trip.",
-//     ],
-//   },
-//   // Add other exams...
-// };
-
-// function ExamPage() {
-//   const { examId } = useParams();
-//   const exam = examContent[examId];
-
-//   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-
-//   if (!exam) {
-//     return <h2>Exam not found.</h2>;
-//   }
-
-//   const currentQuestion = exam.questions[currentQuestionIndex];
-//   const isLastQuestion = currentQuestionIndex === exam.questions.length - 1;
-
-//   const handleNext = () => {
-//     if (!isLastQuestion) {
-//       setCurrentQuestionIndex((prev) => prev + 1);
-//     }
-//   };
-
-//   return (
-//     <div style={{ padding: "40px", textAlign: "center" }}>
-//       <h1>{exam.title}</h1>
-
-//       {!isLastQuestion || currentQuestionIndex === exam.questions.length - 1 ? (
-//         <>
-//           <h3>Question {currentQuestionIndex + 1}</h3>
-//           <p>{currentQuestion}</p>
-
-//           {!isLastQuestion ? (
-//             <button onClick={handleNext}>Next</button>
-//           ) : (
-//             // <button onClick={() => alert("Exam Finished!")}>Finish</button>
-//             <button onClick={<h1>Exam Finished</h1>}>Finish</button>
-//           )}
-//         </>
-//       ) : (
-//         <p>You've finished the exam!</p>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default ExamPage;
