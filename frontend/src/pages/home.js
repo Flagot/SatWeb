@@ -1,11 +1,9 @@
-import MainContent from "../components/mainContent";
-import Footer from "../components/Footer";
+import MainContent from "../components/mainContent/mainContent";
+
 const Home = () => {
   return (
-    <div className="home">
-      <h2>Home</h2>
+    <div>
       <MainContent />
-      <Footer />
     </div>
   );
 };

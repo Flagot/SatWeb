@@ -1,6 +1,6 @@
 const Preps = () => {
   return (
-    <div className="home">
+    <div>
       <h2>Preps</h2>
     </div>
   );
