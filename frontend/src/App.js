@@ -1,10 +1,10 @@
 import Sidebar from "./components/sidebar/sidebar";
 import Home from "./pages/home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Results from "./pages/results";
-import Tips from "./pages/tips";
-import Preps from "./pages/Preps";
-import Exam from "./pages/exam";
+import Result from "./pages/results";
+import Flashcard from "./pages/tips";
+import OrderHistory from "./pages/order";
+import Exam from "./pages/examPage/exam";
 import { useState } from "react";
 
 function App() {
@@ -21,9 +21,9 @@ function App() {
         <section className={isShrunk ? "home expand" : "home"}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/result" element={<Results />} />
-            <Route path="/preps" element={<Preps />} />
-            <Route path="/tips" element={<Tips />} />
+            <Route path="/result" element={<Result />} />
+            <Route path="/order" element={<OrderHistory />} />
+            <Route path="/tips" element={<Flashcard />} />
             <Route path="/exam/:examId" element={<Exam />} />
           </Routes>
         </section>

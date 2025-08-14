@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SAT Practice Exam</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-[#F8F9FB] text-gray-800">
+    <div class="max-w-7xl mx-auto p-4">
+      <!-- Top Bar -->
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-bold text-[#1A2B4C]">SAT Practice Section</h2>
+        <div class="text-lg font-semibold text-[#F5A623]" id="timer">
+          Time Left: 05:00
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Question Column -->
+        <div
+          class="md:col-span-2 bg-white p-6 rounded-lg shadow"
+          id="question-container"
+        >
+          <div class="mb-4 font-semibold" id="question-number">
+            Question 1 of 3
+          </div>
+          <div class="text-gray-700" id="question-text">What is 2 + 2?</div>
+        </div>
+
+        <!-- Choices Column -->
+        <div class="bg-white p-6 rounded-lg shadow" id="choices-container">
+          <!-- Choices will be inserted here by JS -->
+          <button
+            id="mark-btn"
+            class="mt-4 w-full py-2 rounded bg-gray-200 hover:bg-gray-300"
+          >
+            Mark for Review
+          </button>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="flex justify-between mt-6">
+        <button
+          id="prev-btn"
+          class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
+          disabled
+        >
+          Previous
+        </button>
+        <button
+          id="next-btn"
+          class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+
+    <script>
+      const questions = [
+        {
+          text: "What is 2 + 2?",
+          choices: ["A) 2", "B) 3", "C) 4", "D) 5"],
+        },
+        {
+          text: "Which number is prime?",
+          choices: ["A) 4", "B) 6", "C) 7", "D) 9"],
+        },
+        {
+          text: "What is the capital of France?",
+          choices: ["A) Paris", "B) London", "C) Rome", "D) Berlin"],
+        },
+      ];
+
+      let currentQ = 0;
+      const answers = {};
+      const marked = {};
+
+      const questionNumberEl = document.getElementById("question-number");
+      const questionTextEl = document.getElementById("question-text");
+      const choicesContainer = document.getElementById("choices-container");
+      const prevBtn = document.getElementById("prev-btn");
+      const nextBtn = document.getElementById("next-btn");
+      const markBtn = document.getElementById("mark-btn");
+      const timerEl = document.getElementById("timer");
+
+      let timeLeft = 5 * 60; // 5 minutes demo
+
+      // Timer
+      const timerInterval = setInterval(() => {
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          alert("Time is up!");
+          return;
+        }
+        timeLeft--;
+        const m = String(Math.floor(timeLeft / 60)).padStart(2, "0");
+        const s = String(timeLeft % 60).padStart(2, "0");
+        timerEl.textContent = `Time Left: ${m}:${s}`;
+      }, 1000);
+
+      function loadQuestion() {
+        const q = questions[currentQ];
+        questionNumberEl.textContent = `Question ${currentQ + 1} of ${
+          questions.length
+        }`;
+        questionTextEl.textContent = q.text;
+
+        // Clear previous choices
+        choicesContainer
+          .querySelectorAll("button.choice-btn")
+          ?.forEach((btn) => btn.remove());
+
+        // Add choices
+        q.choices.forEach((choice) => {
+          const btn = document.createElement("button");
+          btn.textContent = choice;
+          btn.className =
+            "choice-btn w-full text-left p-2 mb-2 rounded border border-gray-300 hover:bg-gray-100";
+          if (answers[currentQ] === choice) {
+            btn.classList.add("border-[#F5A623]", "bg-[#FFF4E1]");
+          }
+          btn.onclick = () => {
+            answers[currentQ] = choice;
+            loadQuestion(); // refresh to highlight selected
+          };
+          choicesContainer.insertBefore(btn, markBtn);
+        });
+
+        // Update mark button
+        markBtn.textContent = marked[currentQ]
+          ? "Marked for Review"
+          : "Mark for Review";
+
+        // Update navigation buttons
+        prevBtn.disabled = currentQ === 0;
+        nextBtn.disabled = currentQ === questions.length - 1;
+      }
+
+      prevBtn.onclick = () => {
+        currentQ--;
+        loadQuestion();
+      };
+      nextBtn.onclick = () => {
+        currentQ++;
+        loadQuestion();
+      };
+      markBtn.onclick = () => {
+        marked[currentQ] = !marked[currentQ];
+        loadQuestion();
+      };
+
+      loadQuestion();
+    </script>
+  </body>
+</html>

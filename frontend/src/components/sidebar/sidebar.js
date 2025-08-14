@@ -44,13 +44,13 @@ const Sidebar = ({ isShrunk, onToggle }) => {
               </Link>{" "}
             </li>
             <li className="nav-link">
-              <Link to="/preps">
+              <Link to="/tips">
                 <i className="bxr bx-bell icon"></i>
                 <span className="text nav-text">Tips</span>
               </Link>{" "}
             </li>
             <li className="nav-link">
-              <Link to="/tips">
+              <Link to="/order">
                 <i className="bxr bx-pie-chart-alt icon"></i>
                 <span className="text nav-text">order History</span>
               </Link>{" "}
