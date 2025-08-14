@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import "./sidebar.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { SidebarContext } from "../../context/sidebarContext";
 
 const Sidebar = ({ isShrunk, onToggle }) => {
+  const { collapsed } = useContext(SidebarContext);
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
@@ -15,7 +17,11 @@ const Sidebar = ({ isShrunk, onToggle }) => {
   }, [isDark]);
 
   return (
-    <nav className={isShrunk ? "sidebar small " : "sidebar"}>
+    <nav
+      className={`sidebar ${isShrunk ? "small" : ""} ${
+        collapsed ? "collapsed" : ""
+      }`}
+    >
       <header>
         <div className="image-text">
           <span className="image">

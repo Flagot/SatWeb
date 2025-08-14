@@ -34,14 +34,18 @@
 // };
 
 // export default Home;
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./ExamPage.css";
+import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { SidebarContext } from "../../context/sidebarContext";
 
 const ExamPage = () => {
   const [exams, setExams] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [markedQuestions, setMarkedQuestions] = useState([]);
   const [selectedChoices, setSelectedChoices] = useState({});
+  const { show } = useContext(SidebarContext);
 
   useEffect(() => {
     const fetchexam = async () => {
@@ -90,50 +94,55 @@ const ExamPage = () => {
   };
 
   return (
-    <div className="exam-container">
-      <div className="question-column">
-        {/* <h2>{exam.title}</h2> */}
-        <div className="progress">
-          Question {currentIndex + 1} / {exams && exams[0].questions.length}
-        </div>
-        <p className="question-text">{currentQuestion.text}</p>
-        <button onClick={handleMark} className="mark-btn">
-          {markedQuestions.includes(currentIndex)
-            ? "Unmark"
-            : "Mark for Review"}
-        </button>
+    <div className="main-exam-container">
+      <div className="top-nav-exam">
+        <h4>Section 1, Module 1: Reading and Writing</h4>
+        <Link to="/">
+          <i onClick={show} className="bxr bx-home-alt icon exam-icon"></i>
+        </Link>
       </div>
 
-      <div className="choices-column">
-        {currentQuestion?.choices?.map((choice, i) => (
-          <div
-            key={i}
-            className={`choice ${
-              selectedChoices[currentIndex] === choice ? "selected" : ""
-            }`}
-            onClick={() => handleChoiceSelect(choice)}
-          >
-            {choice.text}
+      <div className="exam-container">
+        <div className="question-column">
+          {/* <h2>{exam.title}</h2> */}
+          <div className="progress">
+            Question {currentIndex + 1} / {exams && exams[0].questions.length}
           </div>
-        ))}
-
-        <div className="nav-buttons">
-          <button onClick={handlePrev} disabled={currentIndex === 0}>
-            Prev
+          <p className="question-text">{currentQuestion.text}</p>
+          <button onClick={handleMark} className="mark-btn">
+            {markedQuestions.includes(currentIndex)
+              ? "Unmark"
+              : "Mark for Review"}
           </button>
+        </div>
 
-          {currentIndex === exams && exams.questions.length - 1 ? (
-            <button onClick={() => alert("Exam Finished!")}>Finish</button>
-          ) : (
-            <button onClick={handleNext}>Next</button>
-          )}
+        <div className="choices-column">
+          {currentQuestion?.choices?.map((choice, i) => (
+            <div
+              key={i}
+              className={`choice ${
+                selectedChoices[currentIndex] === choice ? "selected" : ""
+              }`}
+              onClick={() => handleChoiceSelect(choice)}
+            >
+              {choice.text}
+            </div>
+          ))}
+
+          <div className="nav-buttons">
+            <button onClick={handlePrev} disabled={currentIndex === 0}>
+              Prev
+            </button>
+
+            {currentIndex === exams && exams.questions.length - 1 ? (
+              <button onClick={() => alert("Exam Finished!")}>Finish</button>
+            ) : (
+              <button onClick={handleNext}>Next</button>
+            )}
+          </div>
         </div>
       </div>
     </div>
-    // <div>
-    //   <h1>All Exams Data</h1>
-    //   <pre>{JSON.stringify(exam, null, 2)}</pre>
-    // </div>
   );
 };
 
