@@ -8,6 +8,7 @@
   padding: 10px 14px;
   transition: var(--trans-05);
   border-right: 1px solid var(--border-color);
+  transition: var(--trans-05);
 }
 .sidebar.small {
   width: 80px;

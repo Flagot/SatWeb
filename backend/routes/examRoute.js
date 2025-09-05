@@ -10,14 +10,14 @@ const {
   updateexam,
 } = require("../controllers/examController");
 
-router.get("/", getexams);
+router.get("/exams", getexams);
 
-router.get("/:id", getexam);
+router.get("/exams/:id", getexam);
 
-router.post("/", createexam);
+router.post("/exams", createexam);
 
-router.delete("/:id", deleteexam);
+router.delete("/exams/:id", deleteexam);
 
-router.patch("/:id", updateexam);
+router.patch("/exams/:id", updateexam);
 
 module.exports = router;

@@ -5,6 +5,8 @@ import Result from "./pages/results";
 import Flashcard from "./pages/tips";
 import OrderHistory from "./pages/order";
 import Exam from "./pages/examPage/exam";
+import ExamList from "./pages/examPage/exams";
+
 import { useState } from "react";
 
 const AppLayout = () => {
@@ -27,7 +29,7 @@ const AppLayout = () => {
           <Route path="/result" element={<Result />} />
           <Route path="/order" element={<OrderHistory />} />
           <Route path="/tips" element={<Flashcard />} />
-          <Route path="/exam/:examId" element={<Exam />} />
+          <Route path="/exam" element={<ExamList />} />
         </Routes>
       </section>
     </div>

@@ -1,6 +1,9 @@
 require("dotenv").config();
 const express = require("express");
-const waiterRoute = require("./routes/examRoute");
+const examRoute = require("./routes/examRoute");
+const moduleRoutes = require("./routes/moduleRoute");
+const sectionRoutes = require("./routes/sectionRoute");
+const questionRoute = require("./routes/questionsRoute");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
@@ -15,7 +18,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api/sat", waiterRoute);
+app.use("/api/sat", examRoute);
+app.use("/api/sat", moduleRoutes);
+app.use("/api/sat", questionRoute);
+app.use("/api/sat", sectionRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)

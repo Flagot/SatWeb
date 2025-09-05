@@ -9,8 +9,13 @@ function PrepSection({ title, examId }) {
   return (
     <div className="section">
       <h2>{title}</h2>
-      <p>Practice tests, time management, strategy guides, and more.</p>
-      <Link to={`/exam/${examId}`}>
+      <p>Practice tests!</p>
+      {/* <Link to={`/exam/${examId}`}>
+        <button onClick={hide} className="start-exam-btn">
+          start exam
+        </button>
+      </Link> */}
+      <Link to={`/exam`}>
         <button onClick={hide} className="start-exam-btn">
           start exam
         </button>

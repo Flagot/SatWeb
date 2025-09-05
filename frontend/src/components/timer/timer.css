@@ -1,0 +1,27 @@
+.timerWrap {
+  display: flex;
+}
+.timer-container {
+  margin-left: 5px;
+  border-radius: 12px;
+  text-align: center;
+  display: flex;
+  padding: 0 2px;
+}
+button {
+  cursor: pointer;
+  border: none;
+  background-color: white;
+  margin-bottom: 5px;
+}
+.timer-container h6 {
+  font-size: 16px;
+}
+.timer-container button {
+  margin: 0 5px;
+  padding: 3px 6px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}

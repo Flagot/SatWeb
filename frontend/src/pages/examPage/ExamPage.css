@@ -1,5 +1,5 @@
 .sidebar.collapsed {
-  display: none;
+  /* display: none; */
 }
 .main-exam-container {
 }
@@ -12,12 +12,19 @@
   padding: 10px 20px;
   border-bottom: 1px solid var(--border-color);
 }
+.bottom-nav-exam {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 20px;
+  border-top: 1px solid var(--border-color);
+}
 .exam-container {
   display: flex;
   padding: 40px;
   gap: 40px;
   max-width: 1200px;
   margin: 0;
+  height: 80vh;
   font-family: sans-serif;
 }
 
@@ -25,15 +32,16 @@
 .choices-column {
   flex: 1;
   background-color: #f8f8f8;
-  padding: 24px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
+.choices-column {
+}
 .question-column {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 10px 20px;
 }
 
 .progress {
@@ -50,10 +58,11 @@
   background: #ffd700;
   border: none;
   padding: 10px 16px;
+  width: 100%;
   font-weight: bold;
   cursor: pointer;
   border-radius: 6px;
-  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .choice {
@@ -76,16 +85,16 @@
 }
 
 .nav-buttons {
-  margin-top: 24px;
   display: flex;
   justify-content: space-between;
+  gap: 20px;
 }
 
 .nav-buttons button {
   padding: 10px 20px;
   border: none;
   background-color: #007bff;
-  color: white;
+  color: rgb(81, 43, 43);
   font-weight: bold;
   border-radius: 6px;
   cursor: pointer;

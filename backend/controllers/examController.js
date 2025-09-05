@@ -1,14 +1,14 @@
 const Exam = require("../models/examModel");
 const mongoose = require("mongoose");
 
-// get all workouts
+// get all exams
 const getexams = async (req, res) => {
   const exams = await Exam.find({}).sort({ createdAt: -1 });
 
   res.status(200).json(exams);
 };
 
-// get a single workout
+// get a single exam
 const getexam = async (req, res) => {
   const { id } = req.params;
 
@@ -25,26 +25,89 @@ const getexam = async (req, res) => {
   res.status(200).json(exam);
 };
 
-// create a new workout
+// create a new exam
+// const createexam = async (req, res) => {
+//   //   try {
+//   //     const { questions } = req.body;
+
+//   //     if (!Array.isArray(questions) || questions.length === 0) {
+//   //       return res.status(400).json({ message: "Questions array is required." });
+//   //     }
+
+//   //     const exam = new Exam({ questions });
+//   //     await exam.save();
+
+//   //     res.status(201).json({ message: "Exam created successfully.", exam });
+//   //   } catch (err) {
+//   //     console.error("Error creating exam:", err);
+//   //     res.status(500).json({ message: "Internal server error." });
+//   //   }
+//   const createExam = async (req, res) => {
+//     try {
+//       const { title, price, timeLimit } = req.body;
+
+//       const totalQuestions = questions ? questions.length : 0;
+
+//       const newExam = new Exam({
+//         title,
+//         price,
+//         timeLimit,
+//         totalQuestions,
+//       });
+
+//       const savedExam = await newExam.save();
+
+//       res.status(201).json({
+//         message: "Exam created successfully",
+//         data: savedExam,
+//       });
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).json({ message: "Failed to create exam", error });
+//     }
+//   };
+// };
+// const createexam = async (req, res) => {
+//   //   try {
+//   //     const { questions } = req.body;
+
+//   //     if (!Array.isArray(questions) || questions.length === 0) {
+//   //       return res.status(400).json({ message: "Questions array is required." });
+//   //     }
+
+//   //     const exam = new Exam({ questions });
+//   //     await exam.save();
+
+//   //     res.status(201).json({ message: "Exam created successfully.", exam });
+//   //   } catch (err) {
+//   //     console.error("Error creating exam:", err);
+//   //     res.status(500).json({ message: "Internal server error." });
+//   //   }
 const createexam = async (req, res) => {
-  try {
-    const { questions } = req.body;
+  if (Array.isArray(req.body)) {
+    const exams = await Exam.insertMany(req.body);
+    res.status(201).json(exams);
+  } else {
+    try {
+      const { exam_id, title } = req.body;
+      const newExam = new Exam({
+        exam_id,
+        title,
+      });
 
-    if (!Array.isArray(questions) || questions.length === 0) {
-      return res.status(400).json({ message: "Questions array is required." });
+      const savedExam = await newExam.save();
+
+      res.status(201).json({
+        message: "Exam created successfully",
+        data: savedExam,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Failed to create exam", error });
     }
-
-    const exam = new Exam({ questions });
-    await exam.save();
-
-    res.status(201).json({ message: "Exam created successfully.", exam });
-  } catch (err) {
-    console.error("Error creating exam:", err);
-    res.status(500).json({ message: "Internal server error." });
   }
 };
-
-// delete a workout
+// delete a exam
 const deleteexam = async (req, res) => {
   try {
     const { id } = req.params;
@@ -61,7 +124,7 @@ const deleteexam = async (req, res) => {
   }
 };
 
-// update a workout
+// update a exam
 const updateexam = async (req, res) => {
   const { id } = req.params;
 
